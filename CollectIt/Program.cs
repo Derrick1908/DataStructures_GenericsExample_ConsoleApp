@@ -7,31 +7,17 @@ namespace CollectIt
     {
         static void Main(string[] args)
         {
-            /*
-            Employee[] employees = new Employee[]{
-                new Employee { Name = "Scott" },
-                new Employee { Name = "Alex" }
-            };*/
+            Queue<Employee> line = new Queue<Employee>();
+            line.Enqueue(new Employee { Name = "Alex" });
+            line.Enqueue(new Employee { Name = "Dani" });
+            line.Enqueue(new Employee { Name = "Chris" });
 
-            List<Employee> employees = new List<Employee>       //Lists work in the Same way as an Array and we can Add New Employees and Remove them Efficiently
+            while(line.Count > 0)
             {
-                new Employee { Name = "Scott" },
-                new Employee { Name = "Alex" }
-            };
-
-            employees.Add(new Employee { Name = "Dani" });
-
-            foreach (var employee in employees)
-            {
+                var employee = line.Dequeue();
                 Console.WriteLine(employee.Name);
             }
 
-            for (int i = 0; i < employees.Count; i++)
-            {
-                Console.WriteLine(employees[i].Name);
-            }
-
-            //Array.Resize(ref employees, 10);        //Limitations with Arrays Cannot Add New Elements or Remove Old Elements Efficiently.
             Console.ReadKey();
         }
     }
