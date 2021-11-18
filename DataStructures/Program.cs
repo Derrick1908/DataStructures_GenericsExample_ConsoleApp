@@ -10,6 +10,13 @@ namespace DataStructures
             var buffer = new Buffer<double>();                  //Using the New Buffer that wraps the Queue Internally along with its Operations
 
             ProcessInput(buffer);
+
+            foreach (var item in buffer)
+            {
+                Console.WriteLine(item);            //Prints each Value in the Buffer; Done only after Implementing the IEnumerable Interface;
+
+            }
+
             ProcessBuffer(buffer);
             Console.ReadKey();
         }

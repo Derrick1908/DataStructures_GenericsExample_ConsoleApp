@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace DataStructures
 {
-    public interface IBuffer<T>
+    public interface IBuffer<T> :IEnumerable<T>
     {
         bool IsEmpty { get; }
         void Write(T Value);
@@ -11,74 +12,62 @@ namespace DataStructures
 
     public class Buffer<T> : IBuffer<T>
     {
-        public Queue<T> _queue = new Queue<T>();
+        protected Queue<T> _queue = new Queue<T>();
 
-        public bool IsEmpty => _queue.Count == 0;
+        public virtual bool IsEmpty => _queue.Count == 0;
 
         /* The Above is a shorthand notation for the Below Function (called Expression bodied functions)
-        public bool IsEmpty
+        public virtual bool IsEmpty
         {
             get { return _queue.Count == 0; }
         }*/
 
-        public T Read()
+        public virtual void Write(T Value)
+        {
+            _queue.Enqueue(Value);
+        }
+        public virtual T Read()
         {
             return _queue.Dequeue();
         }
 
-        public void Write(T Value)
+        public IEnumerator<T> GetEnumerator()
         {
-            _queue.Enqueue(Value);
+            //return _queue.GetEnumerator();
+            foreach (var item in _queue)
+            {
+                //...
+                yield return item;
+            }
         }
+          
+        IEnumerator IEnumerable.GetEnumerator()          //Through this we are explicitly stating that we are Implementing the GetEnumerator Method of the IEnumerable Interface and not of IEnumerable<T>.
+        {                                                //This is needed as we have two Methods with the same name and same number of Arguments(0); so resulting in an error.
+            return GetEnumerator();                      //This calls the above Method through the 'this' reference implicitly i.e. this.GetEnumerator and since the 'this' does not reference IEnumerable it will call the above method.
+        }
+        
     }
 
-    public class CircularBuffer<T> : IBuffer<T>
+    public class CircularBuffer<T> : Buffer<T>
     {
-        private T[] _buffer;
-        private int _start;
-        private int _end;
-
-        public CircularBuffer () : this(capacity:10)
-	    {
-	    }
-        
-        public CircularBuffer(int capacity)
+        int _capacity;
+        public CircularBuffer(int capacity = 10)
         {
-            _buffer = new T[capacity+1];
-            _start = 0;
-            _end = 0;
+            _capacity = capacity;
         }
 
-        public void Write(T value)
+        public override void Write(T Value)
         {
-            _buffer[_end] = value;
-            _end = (_end + 1) % _buffer.Length;
-            if (_end == _start)
-            {
-                _start = (_start + 1) % _buffer.Length;
+            base.Write(Value);
+            if(_queue.Count > _capacity)
+            { 
+                _queue.Dequeue();
             }
         }
 
-        public T Read()
-        {
-            T result = _buffer[_start];
-            _start = (_start + 1) % _buffer.Length;
-            return result;
-        }
-
-        public int Capacity 
-        { 
-            get { return _buffer.Length; } 
-        }
-
-        public bool IsEmpty 
-        {
-            get { return _end == _start; }
-        }
-
-        public bool IsFull 
-        {
-            get { return (_end + 1) % _buffer.Length == _start;  }
-        }       
+        public bool IsFull => _queue.Count == _capacity;
+        /* In Place of 
+         * public bool IsFull { get { return _queue.Count == _capacity; } } 
+         */
     }
 }
