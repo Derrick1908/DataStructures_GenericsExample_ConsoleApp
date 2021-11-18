@@ -6,7 +6,8 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var buffer = new CircularBuffer<double>(capacity: 3);
+            //var buffer = new CircularBuffer<double>(capacity: 3);
+            var buffer = new Buffer<double>();                  //Using the New Buffer that wraps the Queue Internally along with its Operations
 
             ProcessInput(buffer);
             ProcessBuffer(buffer);

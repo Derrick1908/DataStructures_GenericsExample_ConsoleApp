@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 
 namespace DataStructures
 {
@@ -8,7 +8,30 @@ namespace DataStructures
         void Write(T Value);
         T Read();
     }
-    
+
+    public class Buffer<T> : IBuffer<T>
+    {
+        public Queue<T> _queue = new Queue<T>();
+
+        public bool IsEmpty => _queue.Count == 0;
+
+        /* The Above is a shorthand notation for the Below Function (called Expression bodied functions)
+        public bool IsEmpty
+        {
+            get { return _queue.Count == 0; }
+        }*/
+
+        public T Read()
+        {
+            return _queue.Dequeue();
+        }
+
+        public void Write(T Value)
+        {
+            _queue.Enqueue(Value);
+        }
+    }
+
     public class CircularBuffer<T> : IBuffer<T>
     {
         private T[] _buffer;
