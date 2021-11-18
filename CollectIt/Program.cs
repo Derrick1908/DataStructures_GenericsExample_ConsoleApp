@@ -7,28 +7,27 @@ namespace CollectIt
     {
         static void Main(string[] args)
         {
-            Queue<Employee> queue = new Queue<Employee>();
-            queue.Enqueue(new Employee { Name = "Alex" });
-            queue.Enqueue(new Employee { Name = "Dani" });
-            queue.Enqueue(new Employee { Name = "Chris" });
+            HashSet<int> set = new HashSet<int>();
+            set.Add(1);
+            set.Add(2);
+            set.Add(2);     //Won't Add this to the Set List as it is a Duplicate Value. Only Allows Unique Values.
 
-            while(queue.Count > 0)
+            foreach (var item in set)
             {
-                var employee = queue.Dequeue();
-                Console.WriteLine(employee.Name);
+                Console.WriteLine(item);
             }
 
-            Console.WriteLine("----------------");
-
-            Stack<Employee> stack = new Stack<Employee>();
-            stack.Push(new Employee { Name = "Alex" });
-            stack.Push(new Employee { Name = "Dani" });
-            stack.Push(new Employee { Name = "Chris" });
-
-            while (stack.Count > 0)
+            HashSet<Employee> set2 = new HashSet<Employee>();
+            set2.Add(new Employee { Name = "Scott" });
+            set2.Add(new Employee { Name = "Scott" });  //This will add the Second Employee becoz for Reference Types it just check if the references are the same or not. It cannot check explicitly the Values
+                                                        //In order to check the values of the objects explicitly it will have to be told.
+            var employee = new Employee { Name = "Alex" };
+            set2.Add(employee);
+            set2.Add(employee);         //Here as it can see the same object reference is already added, it does not add it again to prevent duplication
+            
+            foreach (var item in set2)
             {
-                var employee = stack.Pop();
-                Console.WriteLine(employee.Name);
+                Console.WriteLine(item.Name);
             }
 
             Console.ReadKey();
