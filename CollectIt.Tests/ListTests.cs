@@ -22,7 +22,7 @@ namespace CollectIt.Tests
             List<int> integers = new List<int> { 1, 2, 3 };
             integers.Remove(2);
 
-            Assert.IsTrue(integers.SequenceEqual(new[] { 1, 2, 3 }));
+            Assert.IsTrue(integers.SequenceEqual(new[] { 1, 3 }));
         }
 
         [TestMethod]

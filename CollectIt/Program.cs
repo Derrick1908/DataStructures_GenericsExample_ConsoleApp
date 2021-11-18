@@ -32,7 +32,7 @@ namespace CollectIt
             }
 
             //Array.Resize(ref employees, 10);        //Limitations with Arrays Cannot Add New Elements or Remove Old Elements Efficiently.
-
+            Console.ReadKey();
         }
     }
 }
