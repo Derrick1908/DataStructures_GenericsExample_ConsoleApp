@@ -2,7 +2,14 @@
 
 namespace DataStructures
 {
-    public class CircularBuffer<T>
+    public interface IBuffer<T>
+    {
+        bool IsEmpty { get; }
+        void Write(T Value);
+        T Read();
+    }
+    
+    public class CircularBuffer<T> : IBuffer<T>
     {
         private T[] _buffer;
         private int _start;
