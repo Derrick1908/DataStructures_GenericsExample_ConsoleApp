@@ -7,14 +7,27 @@ namespace CollectIt
     {
         static void Main(string[] args)
         {
-            Queue<Employee> line = new Queue<Employee>();
-            line.Enqueue(new Employee { Name = "Alex" });
-            line.Enqueue(new Employee { Name = "Dani" });
-            line.Enqueue(new Employee { Name = "Chris" });
+            Queue<Employee> queue = new Queue<Employee>();
+            queue.Enqueue(new Employee { Name = "Alex" });
+            queue.Enqueue(new Employee { Name = "Dani" });
+            queue.Enqueue(new Employee { Name = "Chris" });
 
-            while(line.Count > 0)
+            while(queue.Count > 0)
             {
-                var employee = line.Dequeue();
+                var employee = queue.Dequeue();
+                Console.WriteLine(employee.Name);
+            }
+
+            Console.WriteLine("----------------");
+
+            Stack<Employee> stack = new Stack<Employee>();
+            stack.Push(new Employee { Name = "Alex" });
+            stack.Push(new Employee { Name = "Dani" });
+            stack.Push(new Employee { Name = "Chris" });
+
+            while (stack.Count > 0)
+            {
+                var employee = stack.Pop();
                 Console.WriteLine(employee.Name);
             }
 
