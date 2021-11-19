@@ -4,30 +4,24 @@ namespace DataStructures
 {
     class Program
     {
+        static void ConsoleWrite(double data)           //Signature Matches the Type of Delegate, so hence delegate can point to it.
+        {
+            Console.WriteLine(data);
+        }
+
         static void Main(string[] args)
         {
             //var buffer = new CircularBuffer<double>(capacity: 3);
             var buffer = new Buffer<double>();                  //Using the New Buffer that wraps the Queue Internally along with its Operations
 
             ProcessInput(buffer);
-            Console.WriteLine("-------------Contents of Buffer-------------");
-            buffer.Dump();          //Here we dont have to specify buffer.Dump<double>() becoz the compiler inferes the Type from byffer i.e. t-> Double.
-         //buffer.Dump<int>();      //We will get an Error here becoz this means that buffer is also of type int i.e. of IBuffer<int> whereas it is double
-
-            var asInts = buffer.AsEnumerableOf<double, int>();
-            var asStrings = buffer.AsEnumerableOf<double, string>();
-
-            Console.WriteLine("-------------Int Enumerable-------------");
-            foreach (var item in asInts)
-            {
-                Console.WriteLine(item);            //Prints each Value in the Buffer; Done only after Implementing the IEnumerable Interface;
-            }
             
-            Console.WriteLine("-------------String Enumerable-------------");
-            foreach (var item in asStrings)
-            {
-                Console.WriteLine(item);            //Prints each Value in the Buffer; Done only after Implementing the IEnumerable Interface;
-            }
+            Console.WriteLine("-------------Contents of Buffer-------------");
+            /*var consoleOut = new Printer<double>(ConsoleWrite);
+            buffer.Dump(consoleOut);          //Here we passing the Function through the Delegate Variable         
+            */
+
+            buffer.Dump(ConsoleWrite);       //Rather than doing the above, we can also pass the Function Name directly and the Compiler in the Background will instantiate a delegate pointing to this Method
 
             ProcessBuffer(buffer);
             Console.ReadKey();
