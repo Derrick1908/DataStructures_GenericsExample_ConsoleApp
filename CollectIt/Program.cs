@@ -7,34 +7,17 @@ namespace CollectIt
     {
         static void Main(string[] args)
         {
-            var employeesByName = new Dictionary<string, Employee>();
-            var employeesByDepartment = new Dictionary<string, List<Employee>>();
+            //var employeesByName = new Dictionary<string, List<Employee>>();
+            //var employeesByName = new SortedDictionary<string, List<Employee>>();       //Same as Dictionary but only Sorts the Values based on their Key Values. Note that if Keys are of Value Types it knows how to Sort. But if Keys are of Reference Types, then it has to be specified how to sort.
+            var employeesByName = new SortedList<string, List<Employee>>();       //A Sorted List is more efficient when only Iteration of the List is Involved. Sorted Dicitonary should be used when Inserting or Deleting Entries or Indexing is involved as it is more efficient for those operations.
 
-            employeesByName.Add("Scott", new Employee { Name = "Scott" });
-            employeesByName.Add("Alex", new Employee { Name = "Alex" });
-            employeesByName.Add("Joy", new Employee { Name = "Joy" });
-            //employeesByName.Add("Scott", new Employee { Name = "Scott" });        //Cannot Add Duplicate Keys in a Dictionary
-
-            var scott = employeesByName["Scott"];       //Indexing using the Key Values as they are Unique. Indexing Value depends on the Type of the Key which is string in this case.
-
-            employeesByDepartment.Add("Engineering", 
-                new List<Employee> { new Employee { Name = "Scott" } });
-            //...
-            employeesByDepartment["Engineering"].Add(new Employee { Name = "Scott" });
+            employeesByName.Add("Sales", new List<Employee> { new Employee(), new Employee(), new Employee() });
+            employeesByName.Add("Engineering", new List<Employee> { new Employee(), new Employee() });
 
             foreach (var item in employeesByName)
             {
-                Console.WriteLine("{0}:{1}", item.Key, item.Value.Name);
-            }
-
-            Console.WriteLine("----------");
-            foreach (var item in employeesByDepartment)
-            {
-                Console.WriteLine("{0} Department Employees:: ", item.Key);
-                foreach (var employee in item.Value)
-                {
-                    Console.WriteLine(employee.Name);
-                }
+                Console.WriteLine("The Count of Employees for {0} is {1}",
+                    item.Key, item.Value.Count);
             }
             Console.ReadKey();
         }
