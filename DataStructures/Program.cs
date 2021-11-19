@@ -11,10 +11,19 @@ namespace DataStructures
 
             ProcessInput(buffer);
 
-            foreach (var item in buffer)
+            var asInts = buffer.AsEnumerableOf<int>();
+            var asStrings = buffer.AsEnumerableOf<string>();
+
+            Console.WriteLine("-------------Int Enumerable-------");
+            foreach (var item in asInts)
             {
                 Console.WriteLine(item);            //Prints each Value in the Buffer; Done only after Implementing the IEnumerable Interface;
-
+            }
+            
+            Console.WriteLine("-------------String Enumerable-------");
+            foreach (var item in asStrings)
+            {
+                Console.WriteLine(item);            //Prints each Value in the Buffer; Done only after Implementing the IEnumerable Interface;
             }
 
             ProcessBuffer(buffer);
