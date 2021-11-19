@@ -7,26 +7,34 @@ namespace CollectIt
     {
         static void Main(string[] args)
         {
-            LinkedList<int> list = new LinkedList<int>();
-            list.AddFirst(2);
-            list.AddFirst(3);
+            var employeesByName = new Dictionary<string, Employee>();
+            var employeesByDepartment = new Dictionary<string, List<Employee>>();
 
-            var first = list.First;
-            list.AddAfter(first, 5);
-            list.AddBefore(first, 10);
+            employeesByName.Add("Scott", new Employee { Name = "Scott" });
+            employeesByName.Add("Alex", new Employee { Name = "Alex" });
+            employeesByName.Add("Joy", new Employee { Name = "Joy" });
+            //employeesByName.Add("Scott", new Employee { Name = "Scott" });        //Cannot Add Duplicate Keys in a Dictionary
 
-            foreach (var item in list)
+            var scott = employeesByName["Scott"];       //Indexing using the Key Values as they are Unique. Indexing Value depends on the Type of the Key which is string in this case.
+
+            employeesByDepartment.Add("Engineering", 
+                new List<Employee> { new Employee { Name = "Scott" } });
+            //...
+            employeesByDepartment["Engineering"].Add(new Employee { Name = "Scott" });
+
+            foreach (var item in employeesByName)
             {
-                Console.WriteLine(item);
+                Console.WriteLine("{0}:{1}", item.Key, item.Value.Name);
             }
 
-            Console.WriteLine("----------------");
-            //Another Way of Printing the Elements in the List
-            var node = list.First;
-            while (node != null )
+            Console.WriteLine("----------");
+            foreach (var item in employeesByDepartment)
             {
-                Console.WriteLine(node.Value);
-                node = node.Next;
+                Console.WriteLine("{0} Department Employees:: ", item.Key);
+                foreach (var employee in item.Value)
+                {
+                    Console.WriteLine(employee.Name);
+                }
             }
             Console.ReadKey();
         }
