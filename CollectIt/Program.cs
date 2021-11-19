@@ -7,29 +7,27 @@ namespace CollectIt
     {
         static void Main(string[] args)
         {
-            HashSet<int> set = new HashSet<int>();
-            set.Add(1);
-            set.Add(2);
-            set.Add(2);     //Won't Add this to the Set List as it is a Duplicate Value. Only Allows Unique Values.
+            LinkedList<int> list = new LinkedList<int>();
+            list.AddFirst(2);
+            list.AddFirst(3);
 
-            foreach (var item in set)
+            var first = list.First;
+            list.AddAfter(first, 5);
+            list.AddBefore(first, 10);
+
+            foreach (var item in list)
             {
                 Console.WriteLine(item);
             }
 
-            HashSet<Employee> set2 = new HashSet<Employee>();
-            set2.Add(new Employee { Name = "Scott" });
-            set2.Add(new Employee { Name = "Scott" });  //This will add the Second Employee becoz for Reference Types it just check if the references are the same or not. It cannot check explicitly the Values
-                                                        //In order to check the values of the objects explicitly it will have to be told.
-            var employee = new Employee { Name = "Alex" };
-            set2.Add(employee);
-            set2.Add(employee);         //Here as it can see the same object reference is already added, it does not add it again to prevent duplication
-            
-            foreach (var item in set2)
+            Console.WriteLine("----------------");
+            //Another Way of Printing the Elements in the List
+            var node = list.First;
+            while (node != null )
             {
-                Console.WriteLine(item.Name);
+                Console.WriteLine(node.Value);
+                node = node.Next;
             }
-
             Console.ReadKey();
         }
     }
