@@ -9,8 +9,7 @@ namespace DataStructures
     public interface IBuffer<T> : IEnumerable<T>
     {
         bool IsEmpty { get; }
-        void Write(T Value);
-        IEnumerable<TOutput> AsEnumerableOf<TOutput>();
+        void Write(T Value);        
         T Read();
     }
 }
