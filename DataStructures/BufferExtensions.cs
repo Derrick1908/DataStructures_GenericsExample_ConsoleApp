@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public delegate void Printer<T>(T data);      //Rather than Using Parameter object data we have used T data inorder to avoid the problem of Boxing (Convert Value Type to Reference i.e. Stack to Heap)
     public static class BufferExtensions
     {
-        public static void Dump<T>(this IBuffer<T> buffer, Printer<T> print)
+        public static void Dump<T>(this IBuffer<T> buffer, Action<T> print)
         {
             foreach (var item in buffer)
             {
