@@ -7,25 +7,22 @@ namespace DataStructures
         static void Main(string[] args)
         {
             
-            var buffer = new Buffer<double>();                  //Using the New Buffer that wraps the Queue Internally along with its Operations
+            var buffer = new CircularBuffer<double>(3);                  //Using the New Buffer that wraps the Queue Internally along with its Operations
+            buffer.ItemDiscarded += ItemDiscarded;      //This attaches the Delegate ItemDiscarded to the Function ItemDiscarded that will called in relation to when the event is fired.
 
             ProcessInput(buffer);
 
-            //Converter<double, DateTime> converter = d => new DateTime(2010, 1, 1).AddDays(d);
-            //var asDates = buffer.Map(converter);        //Here there is no need to send the Input and Output type as the Compiler infers it from the COnverter Variable.
-
-            var asDates = buffer.Map(d => new DateTime(2010, 1, 1).AddDays(d));         //Inplace of declaring a variable converter we can directly send the expression body of function and the compiler will initialize the converter delegate pointing to it.
-            
-            foreach (var date in asDates)
-            {
-                Console.WriteLine(date);
-            }
-            
             Console.WriteLine("-------------Contents of Buffer-------------");
             buffer.Dump(d => Console.WriteLine(d));  
 
             ProcessBuffer(buffer);
             Console.ReadKey();
+        }
+
+        private static void ItemDiscarded(object sender, ItemDiscardedEventArgs<double> e)
+        {
+            Console.WriteLine("Buffer Full. Discarding {0} New item is {1}",
+                e.ItemDiscarded, e.NewItem);
         }
 
         private static void ProcessBuffer(IBuffer<double> buffer)
