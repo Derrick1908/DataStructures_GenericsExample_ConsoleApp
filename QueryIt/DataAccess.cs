@@ -18,13 +18,13 @@ namespace QueryIt
         void Delete(T entity);
         T FindById(int id);
         IQueryable<T> FindAll();
-        int commit();
+        int Commit();
     }
 
     public class SqlRepository<T> : IRepository<T> where T : class //This is a Generic Constraint indicating that the Type of T must be of class type i.e. Reference Type and not Value Type
     {
         DbContext _ctx;
-        DbSet _set;
+        DbSet<T> _set;
         public SqlRepository(DbContext ctx)
         {
             _ctx = ctx;
@@ -35,29 +35,29 @@ namespace QueryIt
             _set.Add(newEntity);
         }
 
-        public int commit()
-        {
-            return _ctx.SaveChanges();
-        }
-
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            _set.Remove(entity);
+        }
+
+        public T FindById(int id)
+        {
+            return _set.Find(id);
+        }
+
+        public IQueryable<T> FindAll()
+        {
+            return _set;
+        }      
+
+        public int Commit()
+        {
+            return _ctx.SaveChanges();
         }
 
         public void Dispose()
         {
             _ctx.Dispose();
-        }
-
-        public IQueryable<T> FindAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public T FindById(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
