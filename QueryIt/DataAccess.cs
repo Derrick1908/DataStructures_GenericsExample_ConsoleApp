@@ -21,7 +21,7 @@ namespace QueryIt
         int Commit();
     }
 
-    public class SqlRepository<T> : IRepository<T> where T : class //This is a Generic Constraint indicating that the Type of T must be of class type i.e. Reference Type and not Value Type
+    public class SqlRepository<T> : IRepository<T> where T : class, IEntity //This is a Generic Constraint indicating that the Type of T must be of class type i.e. Reference Type and not Value Type
     {
         DbContext _ctx;
         DbSet<T> _set;
@@ -32,7 +32,10 @@ namespace QueryIt
         }
         public void Add(T newEntity)
         {
-            _set.Add(newEntity);
+            if (newEntity.IsValid())
+            {
+                _set.Add(newEntity);
+            }
         }
 
         public void Delete(T entity)
